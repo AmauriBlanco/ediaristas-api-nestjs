@@ -4,6 +4,6 @@ import { CidadesAtendidasController } from './cidades-atendidas.controller';
 
 @Module({
   controllers: [CidadesAtendidasController],
-  providers: [CidadesAtendidasService]
+  providers: [CidadesAtendidasService],
 })
 export class CidadesAtendidasModule {}
