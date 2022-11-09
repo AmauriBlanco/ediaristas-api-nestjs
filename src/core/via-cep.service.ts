@@ -9,7 +9,7 @@ import axios from 'axios';
 @Injectable()
 export class ViaCepService {
   async buscarEnderecoPorCep(cep: string) {
-    const URL_CEP = `viacep.com.br/ws/${cep}/json/`;
+    const URL_CEP = `https://viacep.com.br/ws/${cep}/json/`;
     let endereco = new EnderecoResponse();
 
     try {
