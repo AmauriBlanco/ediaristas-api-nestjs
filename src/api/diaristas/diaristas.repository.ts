@@ -23,6 +23,16 @@ export class DiaristaRepository {
 
       return { content: usuarios, totalElmentos: count };
     },
+    async existsByCidadesAtendidasCodigoIbge(codigoIbge: string) {
+      const exists = await this.createQueryBuilder('usuario')
+        .leftJoinAndSelect('usuario.cidadesAtendidas', 'cidadesAtendidas')
+        .where('cidadesAtendidas.codigoIbge = :ibge', { ibge: codigoIbge })
+        .andWhere('usuario.tipoUsuario = 2')
+        .limit(1)
+        .getCount();
+
+      return exists > 0 ? true : false;
+    },
   });
 }
 

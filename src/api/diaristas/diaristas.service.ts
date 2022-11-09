@@ -3,6 +3,7 @@ import { DiaristaMapper } from './diaristas.mapper';
 import { DiaristaRepository } from './diaristas.repository';
 import { EnderecoService } from '../consulta-endereco/adapters/endereco-service';
 import { DiaristaLocalidadesPagedResponse } from './dto/diarista-localidades-paged-reponse.dto';
+import { DisponibilidadeResponse } from './dto/disponibilidade-response.dto';
 
 @Injectable()
 export class DiaristasService {
@@ -28,6 +29,16 @@ export class DiaristasService {
       usuarios.totalElmentos,
     );
   }
+
+  async verificarDisponibilidadePorCep(cep: string) {
+    const codigoIbge = await this.buscarCodigoIbgePorcep(cep);
+    const disponibilidade =
+      await this.diaristaRepository.repository.existsByCidadesAtendidasCodigoIbge(
+        codigoIbge,
+      );
+    return new DisponibilidadeResponse(disponibilidade);
+  }
+
   private async buscarCodigoIbgePorcep(cep: string) {
     return await (
       await this.enderecoService.buscarEnderecoCep(cep)
