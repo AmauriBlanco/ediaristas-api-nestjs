@@ -9,14 +9,24 @@ export class DiaristaRepository {
   ) {}
 
   repository = this.diaristaRepository.extend({
-    async buscarDiaristaPorCodigoIbge(ibge: string): Promise<UsuarioApi[]> {
+    async buscarDiaristaPorCodigoIbge(
+      ibge: string,
+      pageSize: number,
+    ): Promise<PagedQuery<UsuarioApi>> {
       const query = this.createQueryBuilder('usuario')
         .leftJoinAndSelect('usuario.cidadesAtendidas', 'cidadesAtendidas')
         .where('cidadesAtendidas.codigoIbge = :ibge', { ibge: ibge })
         .andWhere('usuario.tipoUsuario = 2')
         .orderBy('usuario.reputacao', 'DESC');
-      const usuarios = await query.getMany();
-      return usuarios;
+      const usuarios = await query.limit(pageSize).getMany();
+      const count = await query.getCount();
+
+      return { content: usuarios, totalElmentos: count };
     },
   });
+}
+
+export interface PagedQuery<T> {
+  content: T[];
+  totalElmentos: number;
 }
