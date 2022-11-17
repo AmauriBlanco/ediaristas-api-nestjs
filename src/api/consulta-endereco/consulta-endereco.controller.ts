@@ -11,7 +11,7 @@ export class ConsultaEnderecoController {
   ) {}
 
   @Get()
-  async nuscarEnderecoPorCep(
+  async buscarEnderecoPorCep(
     @Query('cep') cep: string,
   ): Promise<EnderecoResponse> {
     const endereco = await this.enderecoService.buscarEnderecoCep(cep);

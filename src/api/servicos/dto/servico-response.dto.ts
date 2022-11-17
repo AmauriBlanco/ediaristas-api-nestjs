@@ -6,7 +6,7 @@ export class ServicoResponse {
   nome: string;
 
   @Expose({ name: 'valor_minimo' })
-  valorMinimo: number;
+  valorMinimo: string;
 
   @Expose({ name: 'quantidade_horas' })
   quantidadeHoras: number;
@@ -14,37 +14,37 @@ export class ServicoResponse {
   porcentagem: number;
 
   @Expose({ name: 'valor_quarto' })
-  valorQuarto: number;
+  valorQuarto: string;
 
   @Expose({ name: 'horas_quarto' })
   horasQuarto: number;
 
   @Expose({ name: 'valor_sala' })
-  valorSala: number;
+  valorSala: string;
 
   @Expose({ name: 'horas_sala' })
   horasSala: number;
 
   @Expose({ name: 'valor_banheiro' })
-  valorBanheiro: number;
+  valorBanheiro: string;
 
   @Expose({ name: 'horas_banheiro' })
   horasBanheiro: number;
 
   @Expose({ name: 'valor_cozinha' })
-  valorCozinha: number;
+  valorCozinha: string;
 
   @Expose({ name: 'horas_cozinha' })
   horasCozinha: number;
 
   @Expose({ name: 'valor_quintal' })
-  valorQuintal: number;
+  valorQuintal: string;
 
   @Expose({ name: 'horas_quintal' })
   horasQuintal: number;
 
   @Expose({ name: 'valor_outros' })
-  valorOutros: number;
+  valorOutros: string;
 
   @Expose({ name: 'horas_outros' })
   horasOutros: number;

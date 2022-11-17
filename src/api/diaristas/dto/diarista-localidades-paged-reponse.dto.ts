@@ -1,7 +1,10 @@
+import { Expose } from 'class-transformer';
 import { DiaristaLocalidadeResponse } from './create-diarista.dto';
 
 export class DiaristaLocalidadesPagedResponse {
   diaristas: DiaristaLocalidadeResponse[];
+
+  @Expose({ name: 'quantidade_diaristas' })
   tamanhoPagina: number;
   totalElementos: number;
 

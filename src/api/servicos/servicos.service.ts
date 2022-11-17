@@ -12,7 +12,11 @@ export class ServicosService {
     private servicoMapper: ServicoMapper,
   ) {}
   async findAll() {
-    const servicos = await this.servicoRepository.find();
+    const servicos = await this.servicoRepository.find({
+      order: {
+        posicao: 'ASC',
+      },
+    });
     return servicos.map((servico) =>
       this.servicoMapper.toServicoReponseDto(servico),
     );
