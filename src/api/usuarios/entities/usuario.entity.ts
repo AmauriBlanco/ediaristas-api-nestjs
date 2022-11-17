@@ -96,5 +96,7 @@ export class UsuarioApi {
   async setPassword(senha: string) {
     const salt = await bcrypt.salt();
     this.senha = await bcrypt.hash(senha || this.senha, salt);
+
+    return this.senha;
   }
 }
