@@ -7,6 +7,7 @@ import { UsuarioMapper } from './usuarios.mapper';
 import { UsuarioRepository } from './usuarios.repository';
 import { EmailJaExiste } from 'src/core/validators/usuarios/validator-email';
 import { CpfJaExiste } from 'src/core/validators/usuarios/validator-cpf';
+import { ValidatorPasswordConfirmation } from 'src/core/validators/usuarios/validator-password';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UsuarioApi])],
@@ -17,6 +18,7 @@ import { CpfJaExiste } from 'src/core/validators/usuarios/validator-cpf';
     UsuarioRepository,
     EmailJaExiste,
     CpfJaExiste,
+    ValidatorPasswordConfirmation,
   ],
 })
 export class UsuariosModule {}
