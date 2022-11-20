@@ -94,7 +94,7 @@ export class UsuarioApi {
 
   @BeforeInsert()
   async setPassword(senha: string) {
-    const salt = await bcrypt.salt();
+    const salt = await bcrypt.genSalt();
     this.senha = await bcrypt.hash(senha || this.senha, salt);
 
     return this.senha;

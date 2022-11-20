@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { IsDateString, IsNotEmpty, IsOptional, Length } from 'class-validator';
 
 export class UsuarioRequestDto {
@@ -6,6 +7,7 @@ export class UsuarioRequestDto {
   @Length(3, 255, {
     message: 'Nome Completo deve possuir entre 3 e 255 caracteres',
   })
+  @Expose({ name: 'nome_completo' })
   nomeCompleto: string;
 
   @Length(3, 255, {
@@ -17,9 +19,11 @@ export class UsuarioRequestDto {
   password: string;
 
   @IsNotEmpty()
+  @Expose({ name: 'password_confirmation' })
   passwordConfirmation: string;
 
   @IsNotEmpty()
+  @Expose({ name: 'tipo_usuario' })
   tipoUsuario: number;
 
   @Length(11, 11, {
@@ -39,6 +43,7 @@ export class UsuarioRequestDto {
   telefone: string;
 
   @IsOptional()
+  @Expose({ name: 'chave_pix' })
   chavePix: string;
   //   fotoDocumento: Foto;
   //   fotoUsuario: Foto;
