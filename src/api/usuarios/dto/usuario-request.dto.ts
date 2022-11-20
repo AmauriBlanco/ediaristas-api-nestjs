@@ -1,5 +1,14 @@
 import { Expose } from 'class-transformer';
-import { IsDateString, IsNotEmpty, IsOptional, Length } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  Length,
+  Validate,
+} from 'class-validator';
+import { CpfJaExiste } from 'src/core/validators/usuarios/validator-cpf';
+import { EmailJaExiste } from 'src/core/validators/usuarios/validator-email';
+import { IdadeValida } from 'src/core/validators/usuarios/validator-idade';
 
 export class UsuarioRequestDto {
   id: number;
@@ -13,6 +22,7 @@ export class UsuarioRequestDto {
   @Length(3, 255, {
     message: 'Email deve possuir entre 3 e 255 caracteres',
   })
+  @Validate(EmailJaExiste)
   email: string;
 
   @IsNotEmpty()
@@ -29,12 +39,14 @@ export class UsuarioRequestDto {
   @Length(11, 11, {
     message: 'CPF deve possuir 11 caracteres',
   })
+  @Validate(CpfJaExiste)
   cpf: string;
 
   @IsOptional()
   reputacao: number;
 
   @IsDateString('', { message: 'Data de nascimento deve ser uma data válida.' })
+  @Validate(IdadeValida)
   nascimento: Date;
 
   @Length(11, 11, {
