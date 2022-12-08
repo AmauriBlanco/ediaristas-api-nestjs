@@ -9,6 +9,7 @@ import {
 import { CpfJaExiste } from 'src/core/validators/usuarios/validator-cpf';
 import { EmailJaExiste } from 'src/core/validators/usuarios/validator-email';
 import { IdadeValida } from 'src/core/validators/usuarios/validator-idade';
+import { ChavePixJaExiste } from 'src/core/validators/usuarios/validator-pix';
 
 export class UsuarioRequestDto {
   id: number;
@@ -56,6 +57,7 @@ export class UsuarioRequestDto {
 
   @IsOptional()
   @Expose({ name: 'chave_pix' })
+  @Validate(ChavePixJaExiste)
   chavePix: string;
   //   fotoDocumento: Foto;
   //   fotoUsuario: Foto;
