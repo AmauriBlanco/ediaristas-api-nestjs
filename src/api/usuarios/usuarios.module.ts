@@ -10,9 +10,11 @@ import { CpfJaExiste } from 'src/core/validators/usuarios/validator-cpf';
 import { ValidatorPasswordConfirmation } from 'src/core/validators/usuarios/validator-password';
 import { ChavePixJaExiste } from 'src/core/validators/usuarios/validator-pix';
 import { ValidatorUsuarioPix } from 'src/core/validators/usuarios/validator-usuario-pix';
+import { Foto } from '../fotos/entities/foto.entity';
+import { FotosService } from '../fotos/fotos.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsuarioApi])],
+  imports: [TypeOrmModule.forFeature([UsuarioApi, Foto])],
   controllers: [UsuariosController],
   providers: [
     UsuariosService,
@@ -23,6 +25,7 @@ import { ValidatorUsuarioPix } from 'src/core/validators/usuarios/validator-usua
     ValidatorPasswordConfirmation,
     ChavePixJaExiste,
     ValidatorUsuarioPix,
+    FotosService,
   ],
 })
 export class UsuariosModule {}

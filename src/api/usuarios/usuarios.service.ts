@@ -4,6 +4,8 @@ import { UsuarioRepository } from './usuarios.repository';
 import { UsuarioRequestDto } from './dto/usuario-request.dto';
 import { ValidatorPasswordConfirmation } from 'src/core/validators/usuarios/validator-password';
 import { ValidatorUsuarioPix } from 'src/core/validators/usuarios/validator-usuario-pix';
+import { Request } from 'express';
+import { FotosService } from '../fotos/fotos.service';
 
 @Injectable()
 export class UsuariosService {
@@ -12,8 +14,13 @@ export class UsuariosService {
     private usuarioMapper: UsuarioMapper,
     private validator: ValidatorPasswordConfirmation,
     private validatorPix: ValidatorUsuarioPix,
+    private foto: FotosService,
   ) {}
-  async cadastrar(UsuarioRequestDto: UsuarioRequestDto) {
+  async cadastrar(
+    UsuarioRequestDto: UsuarioRequestDto,
+    file: Express.Multer.File,
+    req: Request,
+  ) {
     this.validator.validarConfirmacaoDeSenha(
       UsuarioRequestDto.password,
       UsuarioRequestDto.passwordConfirmation,
@@ -22,8 +29,12 @@ export class UsuariosService {
     UsuarioRequestDto.chavePix =
       this.validatorPix.validarUsuarioPix(UsuarioRequestDto);
 
-    const usuarioParaCadastrar =
-      this.usuarioMapper.toUsuarioRequestDto(UsuarioRequestDto);
+    const foto = await this.foto.salvar(file, req);
+
+    const usuarioParaCadastrar = this.usuarioMapper.toUsuarioRequestDto(
+      UsuarioRequestDto,
+      foto,
+    );
 
     usuarioParaCadastrar.senha = await usuarioParaCadastrar.setPassword(
       UsuarioRequestDto.password,
