@@ -8,5 +8,15 @@ export class UsuarioRepository {
     private usuarioRepository: Repository<UsuarioApi>,
   ) {}
 
-  repository = this.usuarioRepository.extend({});
+  repository = this.usuarioRepository.extend({
+    async getMediaReputacao(tipoUsuario: number): Promise<number> {
+      const { avg } = await this.createQueryBuilder('usuario')
+        .select('AVG(usuario.reputacao)', 'avg')
+        .where('usuario.tipo_usuario = :tipo_usuario', {
+          tipo_usuario: tipoUsuario,
+        })
+        .getRawOne();
+      return avg;
+    },
+  });
 }

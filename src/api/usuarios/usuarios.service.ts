@@ -36,6 +36,10 @@ export class UsuariosService {
       foto,
     );
 
+    usuarioParaCadastrar.reputacao = await this.calcularReputacaoMedia(
+      UsuarioRequestDto.tipoUsuario,
+    );
+
     usuarioParaCadastrar.senha = await usuarioParaCadastrar.setPassword(
       UsuarioRequestDto.password,
     );
@@ -44,5 +48,14 @@ export class UsuariosService {
     );
 
     return this.usuarioMapper.toUsuarioResponseDto(usuarioCadatrado);
+  }
+
+  private async calcularReputacaoMedia(tipoUsuario: number): Promise<number> {
+    let reputacaoMedia =
+      await this.usuarioRepository.repository.getMediaReputacao(tipoUsuario);
+    if (reputacaoMedia === null || reputacaoMedia === 0) {
+      reputacaoMedia = 5;
+    }
+    return reputacaoMedia;
   }
 }
