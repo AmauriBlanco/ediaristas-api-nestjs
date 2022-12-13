@@ -12,9 +12,10 @@ import { ChavePixJaExiste } from 'src/core/validators/usuarios/validator-pix';
 import { ValidatorUsuarioPix } from 'src/core/validators/usuarios/validator-usuario-pix';
 import { Foto } from '../fotos/entities/foto.entity';
 import { FotosService } from '../fotos/fotos.service';
+import { MailModule } from 'src/core/services/mail/mail.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsuarioApi, Foto])],
+  imports: [TypeOrmModule.forFeature([UsuarioApi, Foto]), MailModule],
   controllers: [UsuariosController],
   providers: [
     UsuariosService,
