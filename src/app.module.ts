@@ -11,6 +11,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HateoasIndex } from './core/hateoas/hateoas-index';
 import { TypeOrmConfigService } from './database/typeorm-config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TypeOrmConfigService } from './database/typeorm-config';
     UrlGeneratorModule.forRoot({
       appUrl: 'http://localhost:3000',
     }),
+    AuthModule,
   ],
   controllers: [AppController, ApiController],
   providers: [AppService, HateoasIndex],
