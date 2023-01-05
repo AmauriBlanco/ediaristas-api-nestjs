@@ -4,10 +4,26 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioApi } from 'src/api/usuarios/entities/usuario.entity';
+import { JwtStrategy } from './strategies/jwt-strategy';
+import { JwtTokens } from './strategies/jwt-tokens';
+import { UsuarioRepository } from 'src/api/usuarios/usuarios.repository';
+import { UsuarioMapper } from 'src/api/usuarios/usuarios.mapper';
+import { TokenService } from './tokens/tokens.service';
+import { Token } from './tokens/entities/token.entity';
 
 @Module({
-  imports: [JwtModule.register({}), TypeOrmModule.forFeature([UsuarioApi])],
-  providers: [AuthService],
+  imports: [
+    JwtModule.register({}),
+    TypeOrmModule.forFeature([UsuarioApi, Token]),
+  ],
+  providers: [
+    AuthService,
+    JwtTokens,
+    JwtStrategy,
+    UsuarioRepository,
+    UsuarioMapper,
+    TokenService,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

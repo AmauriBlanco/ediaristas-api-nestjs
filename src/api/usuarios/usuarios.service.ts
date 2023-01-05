@@ -41,14 +41,11 @@ export class UsuariosService {
       UsuarioRequestDto.tipoUsuario,
     );
 
-    usuarioParaCadastrar.senha = await usuarioParaCadastrar.setPassword(
-      UsuarioRequestDto.password,
-    );
     const usuarioCadatrado = await this.usuarioRepository.repository.save(
       usuarioParaCadastrar,
     );
 
-    await this.mailService.enviarEmailDeConfirmacao(usuarioCadatrado);
+    // await this.mailService.enviarEmailDeConfirmacao(usuarioCadatrado);
 
     return this.usuarioMapper.toUsuarioResponseDto(usuarioCadatrado);
   }

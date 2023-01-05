@@ -12,9 +12,11 @@ import { AppService } from './app.service';
 import { HateoasIndex } from './core/hateoas/hateoas-index';
 import { TypeOrmConfigService } from './database/typeorm-config';
 import { AuthModule } from './auth/auth.module';
+import { TokensModule } from './auth/tokens/tokens.module';
 
 @Module({
   imports: [
+    AuthModule,
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     UsuariosModule,
     CidadesAtendidasModule,
@@ -25,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
       appUrl: 'http://localhost:3000',
     }),
     AuthModule,
+    TokensModule,
   ],
   controllers: [AppController, ApiController],
   providers: [AppService, HateoasIndex],
