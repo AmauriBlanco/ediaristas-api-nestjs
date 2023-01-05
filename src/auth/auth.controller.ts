@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { UsuarioAuthDto } from './dtos/usuario-auth.dto';
 import { ITokens } from './strategies/jwt-tokens.interface';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -15,5 +15,10 @@ export class AuthController {
   @Post('refresh')
   reautenticar(@Request() req) {
     return this.authService.reautenticar(req);
+  }
+
+  @Post('logout')
+  logout(@Request() req) {
+    return this.authService.logout(req);
   }
 }

@@ -1,4 +1,8 @@
-import { UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Injectable } from '@nestjs/common/decorators';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
@@ -61,6 +65,16 @@ export class JwtTokens {
         throw new UnauthorizedException('Token expirado');
       }
       throw new UnauthorizedException(err.name);
+    }
+  }
+
+  async desativarToken(refreshToken: string) {
+    const tokenExist = await this.tokenService.findOne(refreshToken);
+    if (!tokenExist) {
+      await this.tokenService.create(refreshToken);
+      throw new HttpException('Reset Content', HttpStatus.RESET_CONTENT);
+    } else {
+      throw new UnauthorizedException('Token inválido');
     }
   }
 }

@@ -33,4 +33,9 @@ export class AuthService {
     const payload: JwtPayload = { email };
     return this.jwtTokens.gerarTokens(payload);
   }
+
+  async logout(req: Request) {
+    const refreshToken = req.body.refresh;
+    return this.jwtTokens.desativarToken(refreshToken);
+  }
 }
