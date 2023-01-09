@@ -13,9 +13,18 @@ import { ValidatorUsuarioPix } from 'src/core/validators/usuarios/validator-usua
 import { Foto } from '../fotos/entities/foto.entity';
 import { FotosService } from '../fotos/fotos.service';
 import { MailModule } from 'src/core/services/mail/mail.module';
+import { JwtTokens } from 'src/auth/strategies/jwt-tokens';
+import { JwtModule } from '@nestjs/jwt';
+import { TokenService } from 'src/auth/tokens/tokens.service';
+import { Token } from 'src/auth/tokens/entities/token.entity';
+import { AuthService } from 'src/auth/auth.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsuarioApi, Foto]), MailModule],
+  imports: [
+    TypeOrmModule.forFeature([UsuarioApi, Foto, Token]),
+    MailModule,
+    JwtModule.register({}),
+  ],
   controllers: [UsuariosController],
   providers: [
     UsuariosService,
@@ -27,6 +36,9 @@ import { MailModule } from 'src/core/services/mail/mail.module';
     ChavePixJaExiste,
     ValidatorUsuarioPix,
     FotosService,
+    JwtTokens,
+    TokenService,
+    AuthService,
   ],
 })
 export class UsuariosModule {}

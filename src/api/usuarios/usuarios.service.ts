@@ -7,6 +7,8 @@ import { ValidatorUsuarioPix } from 'src/core/validators/usuarios/validator-usua
 import { Request } from 'express';
 import { FotosService } from '../fotos/fotos.service';
 import { MailService } from 'src/core/services/mail/mail.service';
+import { JwtTokens } from 'src/auth/strategies/jwt-tokens';
+import { JwtPayload } from 'src/auth/strategies/jwt-payload.interface';
 
 @Injectable()
 export class UsuariosService {
@@ -17,6 +19,7 @@ export class UsuariosService {
     private validatorPix: ValidatorUsuarioPix,
     private foto: FotosService,
     private mailService: MailService,
+    private jwtTokens: JwtTokens,
   ) {}
   async cadastrar(
     UsuarioRequestDto: UsuarioRequestDto,
@@ -41,13 +44,20 @@ export class UsuariosService {
       UsuarioRequestDto.tipoUsuario,
     );
 
-    const usuarioCadatrado = await this.usuarioRepository.repository.save(
+    const usuarioCadastrado = await this.usuarioRepository.repository.save(
       usuarioParaCadastrar,
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const usuarioCadastroDto =
+      this.usuarioMapper.toUsuarioCadastroResponseDto(usuarioCadastrado);
+
+    const { email } = usuarioCadastrado;
+    const payload: JwtPayload = { email };
+    usuarioCadastroDto.token = await this.jwtTokens.gerarTokens(payload);
     // await this.mailService.enviarEmailDeConfirmacao(usuarioCadatrado);
 
-    return this.usuarioMapper.toUsuarioResponseDto(usuarioCadatrado);
+    return usuarioCadastroDto;
   }
 
   private async calcularReputacaoMedia(tipoUsuario: number): Promise<number> {

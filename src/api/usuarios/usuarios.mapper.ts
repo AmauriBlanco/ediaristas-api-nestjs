@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Foto } from '../fotos/entities/foto.entity';
+import { UsuarioCadastroResponseDto } from './dto/usuario-cadastro-reponse.dto';
 import { UsuarioRequestDto } from './dto/usuario-request.dto';
 import { UsuarioResponseDto } from './dto/usuario-response.dto';
 import { UsuarioApi } from './entities/usuario.entity';
@@ -25,6 +26,24 @@ export class UsuarioMapper {
 
   toUsuarioResponseDto(usuario: UsuarioApi): UsuarioResponseDto {
     const usuarioDTO = new UsuarioResponseDto();
+
+    usuarioDTO.id = usuario.id;
+    usuarioDTO.nomeCompleto = usuario.nomeCompleto;
+    usuarioDTO.email = usuario.email;
+    usuarioDTO.tipoUsuario = usuario.tipoUsuario;
+    usuarioDTO.cpf = usuario.cpf;
+    usuarioDTO.nascimento = usuario.nascimento;
+    usuarioDTO.telefone = usuario.telefone;
+    usuarioDTO.chavePix = usuario.chavePix;
+    usuarioDTO.reputacao = Math.round(usuario.reputacao);
+
+    return usuarioDTO;
+  }
+
+  toUsuarioCadastroResponseDto(
+    usuario: UsuarioApi,
+  ): UsuarioCadastroResponseDto {
+    const usuarioDTO = new UsuarioCadastroResponseDto();
 
     usuarioDTO.id = usuario.id;
     usuarioDTO.nomeCompleto = usuario.nomeCompleto;
