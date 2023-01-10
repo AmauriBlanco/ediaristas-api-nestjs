@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DiariasService } from './diarias.service';
-import { CreateDiariaDto } from './dto/create-diaria.dto';
-import { UpdateDiariaDto } from './dto/update-diaria.dto';
+import { CreateDiariaDto } from './dto/diaria-request.dto';
+import { UpdateDiariaDto } from './dto/diaria-reponse.dto';
 
 @Controller('diarias')
 export class DiariasController {

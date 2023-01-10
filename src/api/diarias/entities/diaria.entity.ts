@@ -41,7 +41,7 @@ export class Diaria {
   @Column({ nullable: false })
   bairro: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   complemento: string;
 
   @Column({ nullable: false })

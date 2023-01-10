@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDiariaDto } from './dto/create-diaria.dto';
-import { UpdateDiariaDto } from './dto/update-diaria.dto';
+import { CreateDiariaDto } from './dto/diaria-request.dto';
+import { UpdateDiariaDto } from './dto/diaria-reponse.dto';
 
 @Injectable()
 export class DiariasService {
