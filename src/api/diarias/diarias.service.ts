@@ -1,12 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HateoasDiaria } from 'src/core/hateoas/hateoas-diaria';
 import { ValidatorDiaria } from 'src/core/validators/diaria/validator-diaria';
+import { ValidatorDiariaUsuario } from 'src/core/validators/diaria/validator-diaria-usuario';
 import { Repository } from 'typeorm';
 import { Servico } from '../servicos/entities/servico.entity';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
+import TipoUsuario from '../usuarios/enum/tipo-usuario.enum';
 import { DiariaMapper } from './diarias.mapper';
 import { DiariaRepository } from './diarias.repository';
+import { DiariaResponseDto } from './dto/diaria-reponse.dto';
 import { DiariaRequestDto } from './dto/diaria-request.dto';
+import { Diaria } from './entities/diaria.entity';
 import DiariaStatus from './enum/diaria-status.enum';
 
 @Injectable()
@@ -17,6 +26,8 @@ export class DiariasService {
     private diariaRepository: DiariaRepository,
     private diariaMapper: DiariaMapper,
     private validatorDiaria: ValidatorDiaria,
+    private hateoas: HateoasDiaria,
+    private validatorUsuario: ValidatorDiariaUsuario,
   ) {}
   async cadastrar(
     diariaRequestDto: DiariaRequestDto,
@@ -50,6 +61,51 @@ export class DiariasService {
 
     const diariaDto = this.diariaMapper.toDiariaResponseDto(diariaCadastrada);
     return { diariaDto: diariaDto, diaria: diariaCadastrada };
+  }
+
+  async listarPorUsuarioLogado(usuarioLogado: UsuarioApi) {
+    if (usuarioLogado.tipoUsuario === TipoUsuario.CLIENTE) {
+      const diarias = await this.diariaRepository.repository.findByCliente(
+        usuarioLogado,
+      );
+      return Promise.all(
+        diarias.map((diaria) => {
+          const diariaDto = this.diariaMapper.toDiariaResponseDto(diaria);
+          diariaDto.links = this.hateoas.gerarLinksHateos(
+            usuarioLogado.tipoUsuario,
+            diaria,
+          );
+          return diariaDto;
+        }),
+      );
+    } else {
+      const diarias = await this.diariaRepository.repository.findByDiarista(
+        usuarioLogado,
+      );
+      return Promise.all(
+        diarias.map((diaria) => {
+          const diariaDto = this.diariaMapper.toDiariaResponseDto(diaria);
+          diariaDto.links = this.hateoas.gerarLinksHateos(
+            usuarioLogado.tipoUsuario,
+            diaria,
+          );
+          return diariaDto;
+        }),
+      );
+    }
+  }
+
+  async buscarPorId(
+    id: number,
+    usuarioLogado: UsuarioApi,
+  ): Promise<{ diariaDto: DiariaResponseDto; diaria: Diaria }> {
+    const diaria = await this.diariaRepository.repository.findOneBy({ id: id });
+    if (!diaria) {
+      throw new BadRequestException(`Diária de ID:${id} não encontrada`);
+    }
+    const diariaDto = await this.diariaMapper.toDiariaResponseDto(diaria);
+    this.validatorUsuario.validarDiariaUsuario(usuarioLogado, diaria);
+    return { diariaDto: diariaDto, diaria: diaria };
   }
 
   private calcularComissao(
