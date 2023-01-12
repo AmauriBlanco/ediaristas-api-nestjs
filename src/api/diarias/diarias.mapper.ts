@@ -35,7 +35,7 @@ export class DiariaMapper {
     diariaResponseDto.observacoes = diaria.observacoes;
     diariaResponseDto.servico = diaria.servico.id;
     diariaResponseDto.createdAt = diaria.createdAt;
-    diariaResponseDto.updateAt = diaria.updatedAt;
+    diariaResponseDto.updatedAt = diaria.updatedAt;
     diariaResponseDto.cliente = cliente;
     diariaResponseDto.diarista = diarista;
 

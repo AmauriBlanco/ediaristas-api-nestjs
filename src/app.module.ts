@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { TokensModule } from './auth/tokens/tokens.module';
 import { MeModule } from './api/me/me.module';
 import { DiariasModule } from './api/diarias/diarias.module';
+import { PagamentosModule } from './api/pagamentos/pagamentos.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DiariasModule } from './api/diarias/diarias.module';
     TokensModule,
     MeModule,
     DiariasModule,
+    PagamentosModule,
   ],
   controllers: [AppController, ApiController],
   providers: [AppService, HateoasIndex],

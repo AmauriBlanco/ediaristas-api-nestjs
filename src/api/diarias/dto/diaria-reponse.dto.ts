@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
 import { ClienteResponseDto } from 'src/api/clientes/dto/cliente-response.dto';
 import { UsuarioApi } from 'src/api/usuarios/entities/usuario.entity';
+import { HateoasLinks } from 'src/core/hateoas/hateoas.interface';
 
 export class DiariaResponseDto {
   id: number;
@@ -64,9 +65,13 @@ export class DiariaResponseDto {
 
   diarista: UsuarioApi;
 
+  @Expose({ name: 'created_at' })
   createdAt: Date;
 
-  updateAt: Date;
+  @Expose({ name: 'updated_at' })
+  updatedAt: Date;
 
   valorComissao: number;
+
+  links: HateoasLinks[];
 }
