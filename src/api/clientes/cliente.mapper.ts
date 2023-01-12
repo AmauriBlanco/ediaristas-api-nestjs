@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
 import { ClienteResponseDto } from './dto/cliente-response.dto';
 
+@Injectable()
 export class ClienteMapper {
   toResponse(usuario: UsuarioApi): ClienteResponseDto {
     const ClienteDto = new ClienteResponseDto();

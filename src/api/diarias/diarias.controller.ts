@@ -1,42 +1,24 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { UsuarioApi } from '../usuarios/entities/usuario.entity';
+import TipoUsuario from '../usuarios/enum/tipo-usuario.enum';
 import { DiariasService } from './diarias.service';
-import { CreateDiariaDto } from './dto/diaria-request.dto';
-import { UpdateDiariaDto } from './dto/diaria-reponse.dto';
+import { DiariaRequestDto } from './dto/diaria-request.dto';
 
-@Controller('diarias')
+@Controller('api/diarias')
 export class DiariasController {
   constructor(private readonly diariasService: DiariasService) {}
 
   @Post()
-  create(@Body() createDiariaDto: CreateDiariaDto) {
-    return this.diariasService.create(createDiariaDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.diariasService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.diariasService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDiariaDto: UpdateDiariaDto) {
-    return this.diariasService.update(+id, updateDiariaDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.diariasService.remove(+id);
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(TipoUsuario.CLIENTE)
+  async cadastrar(
+    @Body() DiariaRequestDto: DiariaRequestDto,
+    @GetUser() usuarioLogado: UsuarioApi,
+  ) {
+    return await this.diariasService.cadastrar(DiariaRequestDto, usuarioLogado);
   }
 }

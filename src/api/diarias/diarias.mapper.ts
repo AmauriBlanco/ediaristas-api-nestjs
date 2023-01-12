@@ -1,10 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { ClienteMapper } from '../clientes/cliente.mapper';
 import { DiariaResponseDto } from './dto/diaria-reponse.dto';
 import { Diaria } from './entities/diaria.entity';
 
+@Injectable()
 export class DiariaMapper {
   constructor(private clienteMapper: ClienteMapper) {}
-  toDiariaResponseDtop(diaria: Diaria): DiariaResponseDto {
+  toDiariaResponseDto(diaria: Diaria): DiariaResponseDto {
     const diariaResponseDto = new DiariaResponseDto();
     const cliente = this.clienteMapper.toResponse(diaria.cliente);
     const diarista = null;

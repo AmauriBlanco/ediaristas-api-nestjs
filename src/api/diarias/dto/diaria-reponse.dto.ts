@@ -32,22 +32,22 @@ export class DiariaResponseDto {
   @Expose({ name: 'codigo_ibge' })
   codigoIbge: string;
 
-  @Expose({ name: 'quatidade_quartos' })
+  @Expose({ name: 'quantidade_quartos' })
   quantidadeQuartos: number;
 
-  @Expose({ name: 'quatidade_salas' })
+  @Expose({ name: 'quantidade_salas' })
   quantidadeSalas: number;
 
-  @Expose({ name: 'quatidade_cozinhas' })
+  @Expose({ name: 'quantidade_cozinhas' })
   quantidadeCozinhas: number;
 
-  @Expose({ name: 'quatidade_banheiros' })
+  @Expose({ name: 'quantidade_banheiros' })
   quantidadeBanheiros: number;
 
-  @Expose({ name: 'quatidade_quintais' })
+  @Expose({ name: 'quantidade_quintais' })
   quantidadeQuintais: number;
 
-  @Expose({ name: 'quatidade_outros' })
+  @Expose({ name: 'quantidade_outros' })
   quantidadeOutros: number;
 
   observacoes: string;
