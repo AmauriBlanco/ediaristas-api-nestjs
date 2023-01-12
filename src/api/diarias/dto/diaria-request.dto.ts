@@ -1,10 +1,20 @@
 import { Exclude, Expose } from 'class-transformer';
-import { IsNotEmpty, IsOptional, Length, Max } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  Length,
+  Max,
+  Min,
+  Validate,
+} from 'class-validator';
 import { UsuarioApi } from 'src/api/usuarios/entities/usuario.entity';
+import { dataAtendimentoInicio } from 'src/core/validators/diaria/validator-data-atendimento-inicio';
+import { ServicoExiste } from 'src/core/validators/diaria/validator-servico';
 
 export class DiariaRequestDto {
   @IsNotEmpty({ message: 'Data atendimento não pode ser vazio' })
   @Expose({ name: 'data_atendimento' })
+  @Validate(dataAtendimentoInicio, [6])
   dataAtendimento: Date;
 
   @IsNotEmpty({ message: 'Tempo atendimento não pode ser vazio' })
@@ -93,6 +103,8 @@ export class DiariaRequestDto {
   motivoCancelamento: string;
 
   @IsNotEmpty()
+  @Min(0)
+  @Validate(ServicoExiste)
   servico: number;
 
   @Exclude()

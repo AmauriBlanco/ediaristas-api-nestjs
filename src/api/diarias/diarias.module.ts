@@ -9,6 +9,10 @@ import { DiaristaRepository } from '../diaristas/diaristas.repository';
 import { DiariaMapper } from './diarias.mapper';
 import { DiariaRepository } from './diarias.repository';
 import { ClienteMapper } from '../clientes/cliente.mapper';
+import { ServicoExiste } from 'src/core/validators/diaria/validator-servico';
+import { dataAtendimentoInicio } from 'src/core/validators/diaria/validator-data-atendimento-inicio';
+import { ValidatorDiaria } from 'src/core/validators/diaria/validator-diaria';
+import { ViaCepService } from 'src/core/via-cep.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Diaria, UsuarioApi, Servico])],
@@ -20,6 +24,10 @@ import { ClienteMapper } from '../clientes/cliente.mapper';
     DiariaMapper,
     DiariaRepository,
     ClienteMapper,
+    ServicoExiste,
+    dataAtendimentoInicio,
+    ValidatorDiaria,
+    ViaCepService,
   ],
 })
 export class DiariasModule {}

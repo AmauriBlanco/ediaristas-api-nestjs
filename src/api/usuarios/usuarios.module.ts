@@ -18,6 +18,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from 'src/auth/tokens/tokens.service';
 import { Token } from 'src/auth/tokens/entities/token.entity';
 import { AuthService } from 'src/auth/auth.service';
+import { HateoasUsuario } from 'src/core/hateoas/hateoas-usuario';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AuthService } from 'src/auth/auth.service';
     JwtTokens,
     TokenService,
     AuthService,
+    HateoasUsuario,
   ],
 })
 export class UsuariosModule {}

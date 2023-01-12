@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ValidatorDiaria } from 'src/core/validators/diaria/validator-diaria';
 import { Repository } from 'typeorm';
 import { Servico } from '../servicos/entities/servico.entity';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
@@ -15,14 +16,22 @@ export class DiariasService {
     private servicoRepository: Repository<Servico>,
     private diariaRepository: DiariaRepository,
     private diariaMapper: DiariaMapper,
+    private validatorDiaria: ValidatorDiaria,
   ) {}
   async cadastrar(
     diariaRequestDto: DiariaRequestDto,
     usuarioLogado: UsuarioApi,
   ) {
+    const horaLimiteAtendimento = 20;
     const servico = await this.servicoRepository.findOneBy({
       id: diariaRequestDto.servico,
     });
+
+    await this.validatorDiaria.validarDiaria(
+      diariaRequestDto,
+      horaLimiteAtendimento,
+      servico,
+    );
 
     diariaRequestDto.valorComissao = this.calcularComissao(
       diariaRequestDto,

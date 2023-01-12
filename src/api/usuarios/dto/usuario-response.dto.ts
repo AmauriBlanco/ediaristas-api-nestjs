@@ -1,4 +1,5 @@
 import { Expose } from 'class-transformer';
+import { HateoasLinks } from 'src/core/hateoas/hateoas.interface';
 
 export class UsuarioResponseDto {
   id: number;
@@ -21,4 +22,6 @@ export class UsuarioResponseDto {
 
   @Expose({ name: 'chave_pix' })
   chavePix: string;
+
+  links: HateoasLinks[];
 }
