@@ -1,8 +1,9 @@
-import { Controller, Body, Put, UseGuards, Get } from '@nestjs/common';
+import { Controller, Body, Put, UseGuards, Get, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { IbgeService } from 'src/core/services/consulta-cidade/consult-cidade.service';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
 import TipoUsuario from '../usuarios/enum/tipo-usuario.enum';
 import { EnderecoDiaristaRequestDto } from './dto/endereco-diarista-request.dto.ts';
@@ -12,6 +13,7 @@ import { EnderecoDiaristaService } from './endereco-diarista.service';
 export class EnderecoDiaristaController {
   constructor(
     private readonly enderecoDiaristaService: EnderecoDiaristaService,
+    private consultaIbge: IbgeService,
   ) {}
 
   @Put('endereco')
@@ -32,5 +34,10 @@ export class EnderecoDiaristaController {
   @Roles(TipoUsuario.DIARISTA)
   exibirEndereco(@GetUser() usuarioLogado: UsuarioApi) {
     return this.enderecoDiaristaService.exibirEndereco(usuarioLogado);
+  }
+
+  @Get('endereco/ibge/:codigoIbge')
+  consultaCidadeIbge(@Param('codigoIbge') codigoIbge: string) {
+    return this.consultaIbge.buscarCidadePorCodigoIbge(codigoIbge);
   }
 }
