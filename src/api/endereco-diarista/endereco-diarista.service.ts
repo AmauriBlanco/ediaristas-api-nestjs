@@ -1,0 +1,58 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UsuarioApi } from '../usuarios/entities/usuario.entity';
+import { UsuarioRepository } from '../usuarios/usuarios.repository';
+import { EnderecoDiaristaRequestDto } from './dto/endereco-diarista-request.dto.ts';
+import { EnderecoDiaristaMapper } from './endereco-diarista.mapper';
+import { EnderecoDiarista } from './entities/endereco-diarista.entity';
+
+@Injectable()
+export class EnderecoDiaristaService {
+  constructor(
+    @InjectRepository(EnderecoDiarista)
+    private enderecoRepository: Repository<EnderecoDiarista>,
+    private usuarioRepository: UsuarioRepository,
+    private enderecoMapper: EnderecoDiaristaMapper,
+  ) {}
+  async atualizarEndereco(
+    enderecoDiarista: EnderecoDiaristaRequestDto,
+    usuarioLogado: UsuarioApi,
+  ) {
+    if (!usuarioLogado.endereco) {
+      return this.cadastrarEndereco(enderecoDiarista, usuarioLogado);
+    }
+    return this.novoEndereco(enderecoDiarista, usuarioLogado);
+  }
+
+  private async novoEndereco(
+    enderecoDiarista: EnderecoDiaristaRequestDto,
+    usuarioLogado: UsuarioApi,
+  ) {
+    enderecoDiarista.id = usuarioLogado.endereco.id;
+    usuarioLogado.endereco = await this.enderecoRepository.save(
+      enderecoDiarista,
+    );
+    const usuarioAtualizado = await this.usuarioRepository.repository.save(
+      usuarioLogado,
+    );
+    return this.enderecoMapper.toEnderecoDiaristaResponse(
+      usuarioAtualizado.endereco,
+    );
+  }
+
+  private async cadastrarEndereco(
+    enderecoDiarista: EnderecoDiaristaRequestDto,
+    usuarioLogado: UsuarioApi,
+  ) {
+    usuarioLogado.endereco = await this.enderecoRepository.save(
+      enderecoDiarista,
+    );
+    const usuarioAtualizado = await this.usuarioRepository.repository.save(
+      usuarioLogado,
+    );
+    return this.enderecoMapper.toEnderecoDiaristaResponse(
+      usuarioAtualizado.endereco,
+    );
+  }
+}

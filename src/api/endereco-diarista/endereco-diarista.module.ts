@@ -1,0 +1,19 @@
+import { Module } from '@nestjs/common';
+import { EnderecoDiaristaService } from './endereco-diarista.service';
+import { EnderecoDiaristaController } from './endereco-diarista.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EnderecoDiarista } from './entities/endereco-diarista.entity';
+import { UsuarioApi } from '../usuarios/entities/usuario.entity';
+import { UsuarioRepository } from '../usuarios/usuarios.repository';
+import { EnderecoDiaristaMapper } from './endereco-diarista.mapper';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([EnderecoDiarista, UsuarioApi])],
+  controllers: [EnderecoDiaristaController],
+  providers: [
+    EnderecoDiaristaService,
+    EnderecoDiaristaMapper,
+    UsuarioRepository,
+  ],
+})
+export class EnderecoDiaristaModule {}

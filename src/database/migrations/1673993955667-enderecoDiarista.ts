@@ -1,0 +1,141 @@
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+export class enderecoDiarista1673993955667 implements MigrationInterface {
+  name = 'enderecoDiarista1673993955667';
+
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `CREATE TABLE \`endereco_diarista\` (\`id\` int NOT NULL AUTO_INCREMENT, \`logradouro\` varchar(60) NOT NULL, \`numero\` varchar(10) NOT NULL, \`bairro\` varchar(30) NOT NULL, \`complemento\` varchar(255) NULL, \`cep\` varchar(8) NOT NULL, \`cidade\` varchar(30) NOT NULL, \`estado\` varchar(2) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD \`endereco_id\` int NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD UNIQUE INDEX \`IDX_f4879f5b808cfd80e37001312e\` (\`endereco_id\`)`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP FOREIGN KEY \`FK_401d8e2a36cf32c19a6a9226dc9\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP FOREIGN KEY \`FK_336688b5460b598bd991358aeda\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`cpf\` \`cpf\` varchar(255) NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`nascimento\` \`nascimento\` datetime NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`telefone\` \`telefone\` varchar(255) NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`reputacao\` \`reputacao\` int NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`chave_pix\` \`chave_pix\` varchar(255) NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`foto_usuario\` \`foto_usuario\` int NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`foto_documento\` \`foto_documento\` int NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` DROP FOREIGN KEY \`FK_c6be57059c27ed5e34f66fc6da6\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`complemento\` \`complemento\` varchar(255) NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`observacoes\` \`observacoes\` varchar(255) NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`motivo_cancelamento\` \`motivo_cancelamento\` varchar(255) NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`diarista_id\` \`diarista_id\` int NULL`,
+    );
+    await queryRunner.query(
+      `CREATE UNIQUE INDEX \`REL_f4879f5b808cfd80e37001312e\` ON \`usuario_api\` (\`endereco_id\`)`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD CONSTRAINT \`FK_401d8e2a36cf32c19a6a9226dc9\` FOREIGN KEY (\`foto_usuario\`) REFERENCES \`foto\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD CONSTRAINT \`FK_336688b5460b598bd991358aeda\` FOREIGN KEY (\`foto_documento\`) REFERENCES \`foto\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD CONSTRAINT \`FK_f4879f5b808cfd80e37001312ed\` FOREIGN KEY (\`endereco_id\`) REFERENCES \`endereco_diarista\`(\`id\`) ON DELETE CASCADE ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` ADD CONSTRAINT \`FK_c6be57059c27ed5e34f66fc6da6\` FOREIGN KEY (\`diarista_id\`) REFERENCES \`usuario_api\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` DROP FOREIGN KEY \`FK_c6be57059c27ed5e34f66fc6da6\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP FOREIGN KEY \`FK_f4879f5b808cfd80e37001312ed\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP FOREIGN KEY \`FK_336688b5460b598bd991358aeda\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP FOREIGN KEY \`FK_401d8e2a36cf32c19a6a9226dc9\``,
+    );
+    await queryRunner.query(
+      `DROP INDEX \`REL_f4879f5b808cfd80e37001312e\` ON \`usuario_api\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`diarista_id\` \`diarista_id\` int NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`motivo_cancelamento\` \`motivo_cancelamento\` varchar(255) NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`observacoes\` \`observacoes\` varchar(255) NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` CHANGE \`complemento\` \`complemento\` varchar(255) NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`diaria\` ADD CONSTRAINT \`FK_c6be57059c27ed5e34f66fc6da6\` FOREIGN KEY (\`diarista_id\`) REFERENCES \`usuario_api\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`foto_documento\` \`foto_documento\` int NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`foto_usuario\` \`foto_usuario\` int NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`chave_pix\` \`chave_pix\` varchar(255) NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`reputacao\` \`reputacao\` int NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`telefone\` \`telefone\` varchar(255) NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`nascimento\` \`nascimento\` datetime NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` CHANGE \`cpf\` \`cpf\` varchar(255) NULL DEFAULT 'NULL'`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD CONSTRAINT \`FK_336688b5460b598bd991358aeda\` FOREIGN KEY (\`foto_documento\`) REFERENCES \`foto\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` ADD CONSTRAINT \`FK_401d8e2a36cf32c19a6a9226dc9\` FOREIGN KEY (\`foto_usuario\`) REFERENCES \`foto\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP INDEX \`IDX_f4879f5b808cfd80e37001312e\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`usuario_api\` DROP COLUMN \`endereco_id\``,
+    );
+    await queryRunner.query(`DROP TABLE \`endereco_diarista\``);
+  }
+}
