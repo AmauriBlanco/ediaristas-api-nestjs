@@ -1,4 +1,4 @@
-import { Controller, Body, Put, UseGuards } from '@nestjs/common';
+import { Controller, Body, Put, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
@@ -25,5 +25,12 @@ export class EnderecoDiaristaController {
       enderecoDiarista,
       usuarioLogado,
     );
+  }
+
+  @Get('endereco')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(TipoUsuario.DIARISTA)
+  exibirEndereco(@GetUser() usuarioLogado: UsuarioApi) {
+    return this.enderecoDiaristaService.exibirEndereco(usuarioLogado);
   }
 }

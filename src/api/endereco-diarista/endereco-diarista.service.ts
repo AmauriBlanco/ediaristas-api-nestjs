@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
@@ -23,6 +23,17 @@ export class EnderecoDiaristaService {
       return this.cadastrarEndereco(enderecoDiarista, usuarioLogado);
     }
     return this.novoEndereco(enderecoDiarista, usuarioLogado);
+  }
+
+  async exibirEndereco(usuarioLogado: UsuarioApi) {
+    if (!usuarioLogado.endereco) {
+      throw new NotFoundException(
+        `Endereço do usuário ${usuarioLogado.email} não encontrado`,
+      );
+    }
+    return this.enderecoMapper.toEnderecoDiaristaResponse(
+      usuarioLogado.endereco,
+    );
   }
 
   private async novoEndereco(
