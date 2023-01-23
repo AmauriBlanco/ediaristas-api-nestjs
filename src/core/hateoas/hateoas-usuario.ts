@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CidadesAtendidasController } from 'src/api/cidades-atendidas/cidades-atendidas.controller';
 import { DiariasController } from 'src/api/diarias/diarias.controller';
 import { EnderecoDiaristaController } from 'src/api/endereco-diarista/endereco-diarista.controller';
 import TipoUsuario from 'src/api/usuarios/enum/tipo-usuario.enum';
@@ -31,7 +32,26 @@ export class HateoasUsuario extends HateoasBase {
         EnderecoDiaristaController,
         EnderecoDiaristaController.prototype.exibirEndereco,
       );
+      this.adicionarLinks(
+        'PUT',
+        'relacionar_cidades',
+        CidadesAtendidasController,
+        CidadesAtendidasController.prototype.atualizarCidadesAtendidas,
+      );
+      this.adicionarLinks(
+        'GET',
+        'listar_cidades',
+        CidadesAtendidasController,
+        CidadesAtendidasController.prototype.listarCidadesAtendidas,
+      );
     }
+
+    this.adicionarLinks(
+      'GET',
+      'lista_diarias',
+      DiariasController,
+      DiariasController.prototype.listarDiarias,
+    );
 
     return this.LINKS;
   }
