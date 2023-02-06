@@ -1,15 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ValidatorCandidatura } from 'src/core/validators/candidatura/validator-candidatura';
 import { DiariaRepository } from '../diarias/diarias.repository';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
 
 @Injectable()
 export class CandidaturasService {
-  constructor(private diariaRepository: DiariaRepository) {}
+  constructor(
+    private diariaRepository: DiariaRepository,
+    private candidaturaValidator: ValidatorCandidatura,
+  ) {}
   async candidatar(id: number, usuarioLogado: UsuarioApi) {
     const diaria = await this.buscarDiariaPorId(id);
     if (!diaria.candidatos) {
       diaria.candidatos = [];
     }
+    await this.candidaturaValidator.validar(usuarioLogado, diaria);
+
     diaria.candidatos.push(usuarioLogado);
     await this.diariaRepository.repository.save(diaria);
     return { message: 'Candidatura realizada com sucesso' };
