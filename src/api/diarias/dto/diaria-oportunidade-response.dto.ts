@@ -1,9 +1,10 @@
 import { Expose } from 'class-transformer';
+import { AvaliacaoResponseDto } from 'src/api/avaliacoes/dto/avaliacao-response';
 import { ClienteResponseDto } from 'src/api/clientes/dto/cliente-response.dto';
 import { DiaristaDiariaResponseDto } from 'src/api/diaristas/dto/diarista-diaria';
 import { HateoasLinks } from 'src/core/hateoas/hateoas.interface';
 
-export class DiariaResponseDto {
+export class DiariaOportunidadeResponseDto {
   id: number;
 
   status: number;
@@ -74,4 +75,7 @@ export class DiariaResponseDto {
   valorComissao: number;
 
   links: HateoasLinks[];
+
+  @Expose({ name: 'avaliacoes_cliente' })
+  avaliacao: AvaliacaoResponseDto[];
 }

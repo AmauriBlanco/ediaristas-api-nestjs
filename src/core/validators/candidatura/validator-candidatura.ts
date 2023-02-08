@@ -10,6 +10,20 @@ export class ValidatorCandidatura {
     this.validarDuplicidadeCandidato(usuarioLogado, diaria);
     this.quantidadeCandidatos(diaria);
     this.validarStatusDiaria(diaria);
+    this.validarDataAtendimento(diaria);
+    this.validarDiaristaDiaria(diaria);
+  }
+  private validarDiaristaDiaria(diaria: Diaria) {
+    if (diaria.diarista) {
+      throw new BadRequestException('Diária já possui um(a) diarista');
+    }
+  }
+  private validarDataAtendimento(diaria: Diaria) {
+    const dataAtual = new Date(Date.now());
+
+    if (diaria.dataAtendimento < dataAtual) {
+      throw new BadRequestException('Data de atendimento Expirada');
+    }
   }
   private validarStatusDiaria(diaria: Diaria) {
     if (diaria.status != DiariaStatus.PAGO) {
