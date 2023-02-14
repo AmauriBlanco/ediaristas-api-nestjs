@@ -20,6 +20,7 @@ import { EnderecoDiaristaModule } from './api/endereco-diarista/endereco-diarist
 import { CandidaturasModule } from './api/candidaturas/candidaturas.module';
 import { OportunidadesModule } from './api/oportunidades/oportunidades.module';
 import { CoreModule } from './core/core.module';
+import { ConfirmacaoPresencaModule } from './api/confirmacao-presenca/confirmacao-presenca.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CoreModule } from './core/core.module';
     CandidaturasModule,
     OportunidadesModule,
     CoreModule,
+    ConfirmacaoPresencaModule,
   ],
   controllers: [AppController, ApiController],
   providers: [AppService, HateoasIndex],
