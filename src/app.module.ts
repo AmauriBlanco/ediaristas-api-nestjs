@@ -21,6 +21,7 @@ import { CandidaturasModule } from './api/candidaturas/candidaturas.module';
 import { OportunidadesModule } from './api/oportunidades/oportunidades.module';
 import { CoreModule } from './core/core.module';
 import { ConfirmacaoPresencaModule } from './api/confirmacao-presenca/confirmacao-presenca.module';
+import { AvaliacaoModule } from './api/avaliacoes/avaliacao.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { ConfirmacaoPresencaModule } from './api/confirmacao-presenca/confirmaca
     OportunidadesModule,
     CoreModule,
     ConfirmacaoPresencaModule,
+    AvaliacaoModule,
   ],
   controllers: [AppController, ApiController],
   providers: [AppService, HateoasIndex],
