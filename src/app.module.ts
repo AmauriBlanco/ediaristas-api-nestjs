@@ -22,6 +22,7 @@ import { OportunidadesModule } from './api/oportunidades/oportunidades.module';
 import { CoreModule } from './core/core.module';
 import { ConfirmacaoPresencaModule } from './api/confirmacao-presenca/confirmacao-presenca.module';
 import { AvaliacaoModule } from './api/avaliacoes/avaliacao.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { AvaliacaoModule } from './api/avaliacoes/avaliacao.module';
     CoreModule,
     ConfirmacaoPresencaModule,
     AvaliacaoModule,
+    EventEmitterModule.forRoot(),
   ],
   controllers: [AppController, ApiController],
   providers: [AppService, HateoasIndex],

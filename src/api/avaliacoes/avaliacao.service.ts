@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { NovaAvaliacaoEvents } from 'src/core/events/nova-avaliacao.events';
 import { AvaliacaoValidator } from 'src/core/validators/avaliacao/validator-avaliacao';
 import { DiariaRepository } from '../diarias/diarias.repository';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
@@ -15,6 +16,7 @@ export class AvaliacaoService {
     private diariaRepository: DiariaRepository,
     private avaliacaoMapper: AvaliacaoMapper,
     private avaliacaoValidator: AvaliacaoValidator,
+    private avaliacaoEvent: NovaAvaliacaoEvents,
   ) {}
 
   async avaliarDiaria(
@@ -32,7 +34,11 @@ export class AvaliacaoService {
     avaliacao.avaliado = this.getAvaliado(avaliacao);
     await this.avaliacaoValidator.validar(avaliacao, usuarioLogado, diaria);
 
-    await this.avaliacaoRepository.repository.save(avaliacao);
+    const avaliacaoCadastrada = await this.avaliacaoRepository.repository.save(
+      avaliacao,
+    );
+
+    this.avaliacaoEvent.NovaAvaliacaoEvent(avaliacaoCadastrada);
 
     return { message: 'Avaliação realizada com sucesso' };
   }

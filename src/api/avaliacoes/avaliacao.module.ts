@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { NovaAvaliacaoEvents } from 'src/core/events/nova-avaliacao.events';
 import { AvaliacaoValidator } from 'src/core/validators/avaliacao/validator-avaliacao';
 import { DiariaRepository } from '../diarias/diarias.repository';
 import { Diaria } from '../diarias/entities/diaria.entity';
@@ -21,6 +22,7 @@ import { Avaliacao } from './entities/avaliacao.entity';
     AvaliacaoService,
     AvaliacaoMapper,
     AvaliacaoValidator,
+    NovaAvaliacaoEvents,
   ],
 })
 export class AvaliacaoModule {}
