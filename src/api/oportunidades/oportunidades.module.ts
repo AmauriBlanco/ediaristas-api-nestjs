@@ -8,9 +8,12 @@ import { Diaria } from '../diarias/entities/diaria.entity';
 import { ClienteMapper } from '../clientes/cliente.mapper';
 import { DiaristaMapper } from '../diaristas/diaristas.mapper';
 import { HateasOportunidade } from 'src/core/hateoas/hateoas-oportunidades';
+import { Avaliacao } from '../avaliacoes/entities/avaliacao.entity';
+import { AvaliacaoRepository } from '../avaliacoes/avaliacao.repository';
+import { AvaliacaoMapper } from '../avaliacoes/avaliacao.mapper';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Diaria])],
+  imports: [TypeOrmModule.forFeature([Diaria, Avaliacao])],
   controllers: [OportunidadesController],
   providers: [
     OportunidadesService,
@@ -19,6 +22,8 @@ import { HateasOportunidade } from 'src/core/hateoas/hateoas-oportunidades';
     ClienteMapper,
     DiaristaMapper,
     HateasOportunidade,
+    AvaliacaoRepository,
+    AvaliacaoMapper,
   ],
 })
 export class OportunidadesModule {}

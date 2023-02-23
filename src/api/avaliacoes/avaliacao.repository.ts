@@ -30,5 +30,16 @@ export class AvaliacaoRepository {
 
       return numeroDeAvaliacoes >= 2 ? true : false;
     },
+
+    async findByAvaliado(avaliado: UsuarioApi): Promise<Avaliacao[]> {
+      const avaliacoes = await this.createQueryBuilder('avaliacao')
+        .leftJoinAndSelect('avaliacao.avaliado', 'avaliado')
+        .where('avaliacao.avaliado_id = :id', { id: avaliado.id })
+        .getMany();
+
+      return avaliacoes.sort(
+        (a, b) => b.createdAt.valueOf() - a.createdAt.valueOf(),
+      );
+    },
   });
 }
