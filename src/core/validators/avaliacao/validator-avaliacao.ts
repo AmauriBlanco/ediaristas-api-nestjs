@@ -21,7 +21,7 @@ export class AvaliacaoValidator {
     this.validarUsuarioDiaria(usuarioLogado, diaria);
     this.validarDiariaStatus(avaliacao);
     this.validarDataAtendimento(avaliacao);
-    this.validarAvaliador(avaliacao);
+    await this.validarAvaliador(avaliacao);
   }
   private async validarAvaliador(avaliacao: Avaliacao) {
     const avaliacoes = await this.avaliacaoRepository.repository.find({

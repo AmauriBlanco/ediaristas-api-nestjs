@@ -13,6 +13,7 @@ export class OportunidadesService {
     private avaliacaoRepository: AvaliacaoRepository,
     private avaliacaoMapper: AvaliacaoMapper,
   ) {}
+
   async buscarOportunidades(usuarioLogado: UsuarioApi) {
     const cidades = usuarioLogado.cidadesAtendidas.map(
       (cidade) => cidade.codigoIbge,
@@ -24,9 +25,9 @@ export class OportunidadesService {
     );
 
     const diariaResponseDto = [];
-
     for (let i = 0; i < diarias.length; i++) {
       diariaResponseDto[i] = this.diariaMapper.toDiariaResponseDto(diarias[i]);
+
       const avaliacoes =
         await this.avaliacaoRepository.repository.findByAvaliado(
           diarias[i].cliente,

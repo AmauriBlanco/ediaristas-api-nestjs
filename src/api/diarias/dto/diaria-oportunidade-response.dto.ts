@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { AvaliacaoResponseDto } from 'src/api/avaliacoes/dto/avaliacao-response';
+import { AvaliacaoResponseDto } from 'src/api/avaliacoes/dto/avaliacao-response.dto';
 import { ClienteResponseDto } from 'src/api/clientes/dto/cliente-response.dto';
 import { DiaristaDiariaResponseDto } from 'src/api/diaristas/dto/diarista-diaria';
 import { HateoasLinks } from 'src/core/hateoas/hateoas.interface';

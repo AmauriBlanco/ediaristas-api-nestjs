@@ -1,12 +1,12 @@
 import { AvaliacaoRequestDto } from './dto/avaliacao-request.dto';
-import { AvaliacaoResponseDto } from './dto/avaliacao-response';
+import { AvaliacaoResponseDto } from './dto/avaliacao-response.dto';
 import { Avaliacao } from './entities/avaliacao.entity';
 
 export class AvaliacaoMapper {
-  toModel(avaliacaoResquest: AvaliacaoRequestDto): Avaliacao {
+  toModel(avalicaoRequest: AvaliacaoRequestDto): Avaliacao {
     const avaliacao = new Avaliacao();
-    avaliacao.nota = avaliacaoResquest.nota;
-    avaliacao.descricao = avaliacaoResquest.descricao;
+    avaliacao.nota = avalicaoRequest.nota;
+    avaliacao.descricao = avalicaoRequest.descricao;
     return avaliacao;
   }
 
@@ -20,7 +20,6 @@ export class AvaliacaoMapper {
     } else {
       avaliacaoResponse.fotoAvaliador = avaliacao.avaliador.fotoUsuario.url;
     }
-
     return avaliacaoResponse;
   }
 }
