@@ -36,7 +36,7 @@ import { Avaliacao } from '../avaliacoes/entities/avaliacao.entity';
     ValidatorDiariaUsuario,
     ViaCepService,
     HateoasDiaria,
-    AvaliacaoRepository
+    AvaliacaoRepository,
   ],
 })
 export class DiariasModule {}
