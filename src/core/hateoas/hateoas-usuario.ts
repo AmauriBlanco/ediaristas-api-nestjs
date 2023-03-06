@@ -3,6 +3,7 @@ import { CidadesAtendidasController } from 'src/api/cidades-atendidas/cidades-at
 import { DiariasController } from 'src/api/diarias/diarias.controller';
 import { EnderecoDiaristaController } from 'src/api/endereco-diarista/endereco-diarista.controller';
 import { OportunidadesController } from 'src/api/oportunidades/oportunidades.controller';
+import { PagamentosController } from 'src/api/pagamentos/pagamentos.controller';
 import TipoUsuario from 'src/api/usuarios/enum/tipo-usuario.enum';
 import { HateoasBase } from './hateoas-base';
 import { HateoasLinks } from './hateoas.interface';
@@ -27,32 +28,42 @@ export class HateoasUsuario extends HateoasBase {
         EnderecoDiaristaController,
         EnderecoDiaristaController.prototype.atualizarEndereco,
       );
+
       this.adicionarLinks(
         'GET',
         'listar_endereco',
         EnderecoDiaristaController,
         EnderecoDiaristaController.prototype.exibirEndereco,
       );
+
       this.adicionarLinks(
         'PUT',
         'relacionar_cidades',
         CidadesAtendidasController,
         CidadesAtendidasController.prototype.atualizarCidadesAtendidas,
       );
+
       this.adicionarLinks(
         'GET',
         'listar_cidades',
         CidadesAtendidasController,
         CidadesAtendidasController.prototype.listarCidadesAtendidas,
       );
-    }
 
-    this.adicionarLinks(
-      'GET',
-      'lista_oportunidades',
-      OportunidadesController,
-      OportunidadesController.prototype.buscarOportunidades,
-    );
+      this.adicionarLinks(
+        'GET',
+        'lista_oportunidades',
+        OportunidadesController,
+        OportunidadesController.prototype.buscarOportunidades,
+      );
+
+      this.adicionarLinks(
+        'GET',
+        'lista_pagamentos',
+        PagamentosController,
+        PagamentosController.prototype.listarPagamentos,
+      );
+    }
 
     this.adicionarLinks(
       'GET',
