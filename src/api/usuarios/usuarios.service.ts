@@ -9,6 +9,7 @@ import { FotosService } from '../fotos/fotos.service';
 import { MailService } from 'src/core/services/mail/mail.service';
 import { JwtTokens } from 'src/auth/strategies/jwt-tokens';
 import { JwtPayload } from 'src/auth/strategies/jwt-payload.interface';
+import { UsuarioApi } from './entities/usuario.entity';
 
 @Injectable()
 export class UsuariosService {
@@ -58,6 +59,17 @@ export class UsuariosService {
     // await this.mailService.enviarEmailDeConfirmacao(usuarioCadatrado);
 
     return usuarioCadastroDto;
+  }
+
+  async atualizarFotoUsuario(
+    file: Express.Multer.File,
+    usuarioLogado: UsuarioApi,
+    req: Request,
+  ): Promise<{ mensagem: string }> {
+    const foto = await this.foto.salvar(file, req);
+    usuarioLogado.fotoUsuario = foto;
+    await this.usuarioRepository.repository.save(usuarioLogado);
+    return { mensagem: 'Foto salva com sucesso' };
   }
 
   private async calcularReputacaoMedia(tipoUsuario: number): Promise<number> {

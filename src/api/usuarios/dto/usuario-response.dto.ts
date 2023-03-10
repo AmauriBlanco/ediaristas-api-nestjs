@@ -14,14 +14,15 @@ export class UsuarioResponseDto {
 
   cpf: string;
 
-  reputacao: number;
-
   nascimento: Date;
 
   telefone: string;
 
   @Expose({ name: 'chave_pix' })
   chavePix: string;
+
+  @Expose({ name: 'foto_usuario' })
+  fotoUsuario: string;
 
   links: HateoasLinks[];
 }

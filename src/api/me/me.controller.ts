@@ -16,10 +16,8 @@ export class MeController {
   @Get()
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   async me(@GetUser() usuario: UsuarioApi): Promise<UsuarioResponseDto> {
-    const usuarioLogado =
-      this.usuarioMapper.toUsuarioCadastroResponseDto(usuario);
+    const usuarioLogado = this.usuarioMapper.toUsuarioResponseDto(usuario);
     usuarioLogado.links = this.hateoas.gerarLinksHateos(usuario.tipoUsuario);
-
     return usuarioLogado;
   }
 }

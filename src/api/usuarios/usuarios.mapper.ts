@@ -26,7 +26,6 @@ export class UsuarioMapper {
 
   toUsuarioResponseDto(usuario: UsuarioApi): UsuarioResponseDto {
     const usuarioDTO = new UsuarioResponseDto();
-
     usuarioDTO.id = usuario.id;
     usuarioDTO.nomeCompleto = usuario.nomeCompleto;
     usuarioDTO.email = usuario.email;
@@ -35,8 +34,7 @@ export class UsuarioMapper {
     usuarioDTO.nascimento = usuario.nascimento;
     usuarioDTO.telefone = usuario.telefone;
     usuarioDTO.chavePix = usuario.chavePix;
-    usuarioDTO.reputacao = Math.round(usuario.reputacao);
-
+    usuarioDTO.fotoUsuario = usuario.fotoUsuario.url;
     return usuarioDTO;
   }
 
@@ -44,7 +42,6 @@ export class UsuarioMapper {
     usuario: UsuarioApi,
   ): UsuarioCadastroResponseDto {
     const usuarioDTO = new UsuarioCadastroResponseDto();
-
     usuarioDTO.id = usuario.id;
     usuarioDTO.nomeCompleto = usuario.nomeCompleto;
     usuarioDTO.email = usuario.email;
@@ -53,8 +50,6 @@ export class UsuarioMapper {
     usuarioDTO.nascimento = usuario.nascimento;
     usuarioDTO.telefone = usuario.telefone;
     usuarioDTO.chavePix = usuario.chavePix;
-    usuarioDTO.reputacao = Math.round(usuario.reputacao);
-
     return usuarioDTO;
   }
 }
