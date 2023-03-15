@@ -23,9 +23,11 @@ import { CoreModule } from './core/core.module';
 import { ConfirmacaoPresencaModule } from './api/confirmacao-presenca/confirmacao-presenca.module';
 import { AvaliacaoModule } from './api/avaliacoes/avaliacao.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { PasswordResetModule } from './api/password-reset/password-reset.module';
 
 @Module({
   imports: [
+    PasswordResetModule,
     AuthModule,
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     UsuariosModule,
