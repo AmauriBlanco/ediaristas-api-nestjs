@@ -5,6 +5,7 @@ import { EnderecoDiaristaController } from 'src/api/endereco-diarista/endereco-d
 import { OportunidadesController } from 'src/api/oportunidades/oportunidades.controller';
 import { PagamentosController } from 'src/api/pagamentos/pagamentos.controller';
 import TipoUsuario from 'src/api/usuarios/enum/tipo-usuario.enum';
+import { UsuariosController } from 'src/api/usuarios/usuarios.controller';
 import { HateoasBase } from './hateoas-base';
 import { HateoasLinks } from './hateoas.interface';
 
@@ -21,6 +22,7 @@ export class HateoasUsuario extends HateoasBase {
         DiariasController.prototype.cadastrar,
       );
     }
+
     if (tipoUsuario === TipoUsuario.DIARISTA) {
       this.adicionarLinks(
         'PUT',
@@ -64,6 +66,20 @@ export class HateoasUsuario extends HateoasBase {
         PagamentosController.prototype.listarPagamentos,
       );
     }
+
+    this.adicionarLinks(
+      'POST',
+      'alterar_foto_usuario',
+      UsuariosController,
+      UsuariosController.prototype.atualizarFotoUsuario,
+    );
+
+    this.adicionarLinks(
+      'PUT',
+      'editar_usuario',
+      UsuariosController,
+      UsuariosController.prototype.atualizar,
+    );
 
     this.adicionarLinks(
       'GET',

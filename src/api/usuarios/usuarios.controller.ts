@@ -6,6 +6,9 @@ import {
   UploadedFile,
   Req,
   UseGuards,
+  forwardRef,
+  Inject,
+  Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UsuarioRequestDto } from './dto/usuario-request.dto';
@@ -14,15 +17,17 @@ import { Request } from 'express';
 import { HateoasUsuario } from 'src/core/hateoas/hateoas-usuario';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
-import multerConfigProfile from './multer-config';
+import { multerConfigProfile } from './multer-config-profile';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { UsuarioApi } from './entities/usuario.entity';
 import multerConfig from './multer-config';
+import { UsuarioAtualizarRequestDto } from './dto/usuario-atualizar-request.dto';
 
 @Controller('api/usuarios')
 export class UsuariosController {
   constructor(
     private readonly usuariosService: UsuariosService,
+    @Inject(forwardRef(() => HateoasUsuario))
     private hateoas: HateoasUsuario,
   ) {}
 
@@ -57,5 +62,14 @@ export class UsuariosController {
       usuarioLogado,
       req,
     );
+  }
+
+  @Put()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  async atualizar(
+    @GetUser() usuarioLogado,
+    @Body() request: UsuarioAtualizarRequestDto,
+  ) {
+    return this.usuariosService.atualizar(request, usuarioLogado);
   }
 }
