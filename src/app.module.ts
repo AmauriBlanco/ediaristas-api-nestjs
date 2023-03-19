@@ -24,9 +24,14 @@ import { ConfirmacaoPresencaModule } from './api/confirmacao-presenca/confirmaca
 import { AvaliacaoModule } from './api/avaliacoes/avaliacao.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PasswordResetModule } from './api/password-reset/password-reset.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['/.env.dev', '/.env.prod'],
+    }),
     PasswordResetModule,
     AuthModule,
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
@@ -36,7 +41,7 @@ import { PasswordResetModule } from './api/password-reset/password-reset.module'
     EnderecoModule,
     ServicosModule,
     UrlGeneratorModule.forRoot({
-      appUrl: 'http://localhost:3000',
+      appUrl: `http://localhost:${process.env.PORT}`,
     }),
     AuthModule,
     TokensModule,

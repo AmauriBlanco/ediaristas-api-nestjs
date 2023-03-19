@@ -4,7 +4,7 @@ import { ConsultaDistanciaCep } from './consulta-distancia';
 import { DistanciaResponseDto } from './dto/distancia-reponse.dto';
 
 export class GoogleMatrixService implements ConsultaDistanciaCep {
-  API_KEY = 'AIzaSyCitXrXOrBYM3dtbmjqnCMTXdIXYORmdiA';
+  API_KEY = process.env.API_KEY;
 
   async calcularDistanciaEntreDoisCeps(
     origem: string,
