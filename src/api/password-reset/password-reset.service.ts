@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import { UsuarioRepository } from '../usuarios/usuarios.repository';
 import { PasswordResetConfirmacaoRequestDto } from './dto/password-reset-confirmacao.dto';
 import { PasswordResetRequestDto } from './dto/password-reset.dto';
-import { PasswordReset } from './entities/password-reset.entitiy';
+import { PasswordReset } from './entities/password-reset.entity';
 
 @Injectable()
 export class PasswordResetService {
@@ -59,6 +59,7 @@ export class PasswordResetService {
 
   async solicitarResetDeSenha(request: PasswordResetRequestDto) {
     const passwordReset = await this.criarPasswordReset(request.email);
+
     if (passwordReset) {
       await this.mailService.enviarEmailDeResetDeSenha(passwordReset);
     }

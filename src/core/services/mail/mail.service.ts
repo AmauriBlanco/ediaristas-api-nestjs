@@ -1,6 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { PasswordReset } from 'src/api/password-reset/entities/password-reset.entitiy';
+import { PasswordReset } from 'src/api/password-reset/entities/password-reset.entity';
 import { UsuarioApi } from 'src/api/usuarios/entities/usuario.entity';
 import TipoUsuario from 'src/api/usuarios/enum/tipo-usuario.enum';
 

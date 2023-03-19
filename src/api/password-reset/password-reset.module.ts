@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailService } from 'src/core/services/mail/mail.service';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
 import { UsuarioRepository } from '../usuarios/usuarios.repository';
-import { PasswordReset } from './entities/password-reset.entitiy';
+import { PasswordReset } from './entities/password-reset.entity';
 import { PasswordResetController } from './password-reset.controller';
 import { PasswordResetService } from './password-reset.service';
 
